@@ -150,6 +150,12 @@ class HttpConnect{
     print("DB Info: Received JSON: $parsedResponse");
     if(parsedResponse['email'] != null){
       UserInfoDb userInfoDb = new UserInfoDb();
+      bool i = (parsedResponse['insurance'].contains('true')) ? true : false;
+      bool handi = (parsedResponse['handicap'].contains('true')) ? true : false;
+      bool di = (parsedResponse['diabetes'].contains('true')) ? true : false;
+      bool hy = (parsedResponse['hypertension'].contains('true')) ? true : false;
+      bool al = (parsedResponse['alcoholism'].contains('true')) ? true : false;
+
       userInfoDb.setInfoEncrypted(parsedResponse['email'],
           parsedResponse['password'],
           parsedResponse['name'],
@@ -157,11 +163,11 @@ class HttpConnect{
           parsedResponse['gender'],
           parsedResponse['phone'],
           parsedResponse['nationality'],
-          parsedResponse['insurance'],
-          parsedResponse['handicap'],
-          parsedResponse['diabetes'],
-          parsedResponse['hypertension'],
-          parsedResponse['alcoholism']);
+          i,
+          handi,
+          di,
+          hy,
+          al);
       print("DB Info: Received user profile info...");
       userInfoDb.printUser();
       return userInfoDb;

@@ -1,4 +1,5 @@
 import 'package:asim/appointmentpage.dart';
+import 'package:asim/bookingpage.dart';
 import 'package:asim/dbInfo.dart';
 import 'package:asim/profiledisplay.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'loginsignupWidgets.dart';
 import 'package:asim/colors.dart';
 import 'startpageWidgets.dart';
 import 'appointmentpage.dart';
+import 'bookingpage.dart';
 
 asimColors col = new asimColors();
 StartPageWidgets spwidgets = new StartPageWidgets();
@@ -52,12 +54,11 @@ class StartPageState extends State<StartPage> {
     ProfileDisplay profileDisplay = new ProfileDisplay();
     profileDisplay.setUser(userInfoDb);
 
+    BookingPage bookingPage = new BookingPage();
+
     List<Widget> widgetOptions = <Widget>[
       appPage.page(),
-      Text(
-        'Index 0: Home',
-        style: optionStyle,
-      ),
+      bookingPage.book(),
       profileDisplay.profile(),
     ];
 
