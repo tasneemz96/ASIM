@@ -38,6 +38,15 @@ class ProfileDisplay{
                   TextSpan(
                     text: "Insurance: ${userInfoDb.insurance} \n",
                   ),
+                  TextSpan(
+                    text: "Diabetes: ${userInfoDb.diabetes}\n",
+                  ),
+                  TextSpan(
+                    text: "Hypertension: ${userInfoDb.hypertension}\n",
+                  ),
+                  TextSpan(
+                    text: "Alcoholism: ${userInfoDb.alcoholism}\n",
+                  )
                 ]
             ),
           )

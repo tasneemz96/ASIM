@@ -15,17 +15,22 @@ class UserInfoDb {
   String phone;
   String gender;
   String nationality;
-  String insurance;
+  bool insurance;
   String dob;
+  bool handicap;
+  bool diabetes;
+  bool hypertension;
+  bool alcoholism;
+
   PasswordEncrypt passwordEncrypt = new PasswordEncrypt();
 
   UserInfoDb({this.email, this.password, this.name, this.phone, this.gender, this.nationality,
-    this.insurance, this.dob});
+    this.insurance, this.dob, this.handicap, this.diabetes, this.alcoholism, this.hypertension});
 
-  List<String> getAllInfo(){
+  /*List<String> getAllInfo(){
     List<String> allInfo = [this.email, this.name, this.dob, this.gender, this.phone, this.nationality, this.insurance];
     return allInfo;
-  }
+  }*/
 
   void printUser(){
     print("${this.email},"
@@ -36,7 +41,11 @@ class UserInfoDb {
         "${this.gender},"
         "${this.phone},"
         "${this.nationality},"
-        "${this.insurance} ");
+        "${this.insurance},"
+        "${this.handicap},"
+        "${this.diabetes},"
+        "${this.hypertension},"
+        "${this.alcoholism}");
   }
 
   factory UserInfoDb.fromJson(Map<String, dynamic> json) {
@@ -48,11 +57,15 @@ class UserInfoDb {
       gender: json['gender'],
       phone: json['phone'],
       nationality: json['nationality'],
-      insurance: json['insurance']
+      insurance: json['insurance'],
+      handicap: json['handicap'],
+      diabetes: json['diabetes'],
+      hypertension: json['hypertension'],
+      alcoholism: json['alcoholism']
     );
   }
 
-  void setInfo(String e, String pwd, String n, String d, String g, String p, String nat, String i){
+  void setInfo(String e, String pwd, String n, String d, String g, String p, String nat, bool i, bool handi, bool di, bool hy, bool al){
     this.email = e;
     this.password = pwd;
     this.encryptedPassword = "${passwordEncrypt.encrypt(this.password)}";
@@ -62,9 +75,13 @@ class UserInfoDb {
     this.phone = p;
     this.nationality = nat;
     this.insurance = i;
+    this.handicap = handi;
+    this.diabetes = di;
+    this.hypertension = hy;
+    this.alcoholism = al;
   }
 
-  void setInfoEncrypted(String e, String pwd, String n, String d, String g, String p, String nat, String i){
+  void setInfoEncrypted(String e, String pwd, String n, String d, String g, String p, String nat, bool i, bool handi, bool di, bool hy, bool al){
     this.email = e;
     this.password = 'encrypted';
     this.encryptedPassword = pwd;
@@ -74,6 +91,10 @@ class UserInfoDb {
     this.phone = p;
     this.nationality = nat;
     this.insurance = i;
+    this.handicap = handi;
+    this.diabetes = di;
+    this.hypertension = hy;
+    this.alcoholism = al;
   }
 
 }
@@ -82,13 +103,17 @@ class HttpConnect{
   Future<UserInfoDb> insertUser(UserInfoDb userInfoDb) async {
 
     String j = '{"email": "${userInfoDb.email}", '
-        '"password" : "${userInfoDb.encryptedPassword}", '
+        '"password": "${userInfoDb.encryptedPassword}", '
         '"name": "${userInfoDb.name}", '
         '"dob": "${userInfoDb.dob}", '
         '"gender": "${userInfoDb.gender}", '
         '"phone": "${userInfoDb.phone}", '
         '"nationality": "${userInfoDb.nationality}", '
-        '"insurance": "${userInfoDb.insurance}"}';
+        '"insurance": "${userInfoDb.insurance}",'
+        '"handicap": "${userInfoDb.handicap}",'
+        '"diabetes": "${userInfoDb.diabetes}",'
+        '"hypertension" : "${userInfoDb.hypertension}",'
+        '"alcoholism": "${userInfoDb.alcoholism}"}';
 
     String signUpURL = serverURL + '/signup';
 
@@ -132,7 +157,11 @@ class HttpConnect{
           parsedResponse['gender'],
           parsedResponse['phone'],
           parsedResponse['nationality'],
-          parsedResponse['insurance']);
+          parsedResponse['insurance'],
+          parsedResponse['handicap'],
+          parsedResponse['diabetes'],
+          parsedResponse['hypertension'],
+          parsedResponse['alcoholism']);
       print("DB Info: Received user profile info...");
       userInfoDb.printUser();
       return userInfoDb;

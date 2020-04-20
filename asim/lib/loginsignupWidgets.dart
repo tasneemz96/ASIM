@@ -13,8 +13,7 @@ LoginSignupState log = new LoginSignupState();
 String nationalityValue;
 UserInfoDb userInfoDb = UserInfoDb();
 
-class LoginSignupWidgets{
-
+class LoginSignupWidgets {
   String e, n, d, p, g, nat, i, pwd;
 
   Widget email() {
@@ -25,7 +24,7 @@ class LoginSignupWidgets{
           controller: log.emailController,
           decoration: InputDecoration(
             icon: Icon(
-              MdiIcons.email,
+              MdiIcons.email, color: col.asbestos(),
             ),
             labelText: "Email address",
             // hintText: 'Email address',
@@ -33,8 +32,7 @@ class LoginSignupWidgets{
           validator: (value) {
             if (value.isEmpty) {
               return 'Enter email address';
-            }
-            else{
+            } else {
               e = value;
             }
             return null;
@@ -50,18 +48,20 @@ class LoginSignupWidgets{
           labelText: "Password",
           icon: Icon(
             MdiIcons.lockQuestion,
+              color: col.asbestos()
           )),
       validator: (value) {
         if (value.isEmpty) {
           return 'Enter password';
-        }
-        else{
+        } else {
           pwd = value;
         }
         return null;
       },
     );
   }
+
+
 
   Widget name() {
     return TextFormField(
@@ -70,12 +70,12 @@ class LoginSignupWidgets{
           labelText: "Full name",
           icon: Icon(
             MdiIcons.account,
+            color: col.asbestos(),
           )),
       validator: (value) {
         if (value.isEmpty) {
           return 'Enter full name';
-        }
-        else {
+        } else {
           n = value;
         }
         return null;
@@ -94,14 +94,13 @@ class LoginSignupWidgets{
             fontSize: 16,
           ),
           icon: Icon(
-            MdiIcons.cellphone,
+            MdiIcons.cellphone, color: col.asbestos()
           )),
       validator: (value) {
         if (value.isEmpty) {
           return 'Enter phone number';
-        }
-        else{
-          p = '971'+value;
+        } else {
+          p = '971' + value;
         }
         return null;
       },
@@ -114,18 +113,16 @@ class LoginSignupWidgets{
       decoration: InputDecoration(
           labelText: "Insurance company and type",
           icon: Icon(
-            MdiIcons.handHeart,
+            MdiIcons.handHeart, color: col.asbestos()
           )),
       validator: (value) {
         if (value.isEmpty) {
           return 'Enter insurance details';
-        }
-        else{
+        } else {
           i = value;
         }
         return null;
       },
     );
   }
-
 }

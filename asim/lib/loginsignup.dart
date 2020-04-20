@@ -41,7 +41,10 @@ class LoginSignupState extends State<LoginSignup> {
   String nationalityValue;
 
   String genderUser = 'Male';
+  bool insurance_val = true;
   Genders _genders = Genders.male;
+  Insurance _insurance = Insurance.yes;
+  Handicap _handicap = Handicap.yes;
 
   String dobUser = " ";
   DateTime selectedDate = DateTime((DateTime.now().year - 18));
@@ -227,6 +230,212 @@ class LoginSignupState extends State<LoginSignup> {
       ],
     );
   }
+// ***************************** disease widget ************************************
+
+  bool alcoholism_val = false;
+  bool hypertension_val = false;
+  bool diabetes_val = false;
+
+  Widget disease() {
+    return Column(
+      children: <Widget>[
+        Row(
+          children: <Widget>[
+            Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 17.0, 0),
+              child: Icon(MdiIcons.heartPulse),
+            ),
+            Flexible(
+              child: Text(
+                'Do you have a history of any of the following illnesses?',
+                style: TextStyle(fontSize: 16, color: Colors.black),
+              ),
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(27, 0, 0, 0),
+              child: Checkbox(
+                value: diabetes_val,
+                onChanged: (bool value) {
+                  setState(() {
+                    diabetes_val = value;
+                  });
+                },
+              ),
+            ),
+            Text(
+              'Diabetes',
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(27, 0, 0, 0),
+              child: Checkbox(
+                value: hypertension_val,
+                onChanged: (bool value) {
+                  setState(() {
+                    hypertension_val = value;
+                  });
+                },
+              ),
+            ),
+            Text(
+              'Hypertension',
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
+        Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.fromLTRB(27, 0, 0, 0),
+              child: Checkbox(
+                value: alcoholism_val,
+                onChanged: (bool value) {
+                  setState(() {
+                    alcoholism_val = value;
+                  });
+                },
+              ),
+            ),
+            Text(
+              'Alcoholism',
+              style: TextStyle(fontSize: 16),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  // ******************************************insurance widget************************************
+
+
+
+  Widget insurance() {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Icon(
+              MdiIcons.handHeart,
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(17.0, 0, 0, 0),
+              child: Text('Do you have health insurance?',
+                  style: TextStyle(fontSize: 16)),
+            ),
+          ],
+        ),
+        Container(
+            padding: EdgeInsets.fromLTRB(27.0, 0, 0, 0),
+            child: Row(
+              children: <Widget>[
+                Radio(
+                  value: Insurance.yes,
+                  groupValue: _insurance,
+                  onChanged: (Insurance value) {
+                    setState(() {
+                      _insurance = value;
+                      insurance_val=true;
+
+                    });
+                  },
+                ),
+                Text(
+                  'Yes',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                  child: Radio(
+                    value: Insurance.no,
+                    groupValue: _insurance,
+                    onChanged: (Insurance value) {
+                      setState(() {
+                        _insurance = value;
+                        insurance_val = false;
+                      });
+                    },
+                  ),
+                ),
+                Text(
+                  'No',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ],
+            )),
+      ],
+    );
+  }
+
+  // ************************************handicap widget******************************************
+
+  bool handicap_val = true;
+
+  Widget handicap() {
+    return Column(
+      children: <Widget>[
+        Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: <Widget>[
+            Icon(
+              MdiIcons.wheelchairAccessibility,
+            ),
+            Container(
+              padding: EdgeInsets.fromLTRB(17.0, 0, 0, 0),
+              child: Text('Are you a person of determination?',
+                  style: TextStyle(fontSize: 16)),
+            ),
+          ],
+        ),
+        Container(
+            padding: EdgeInsets.fromLTRB(27.0, 0, 0, 0),
+            child: Row(
+              children: <Widget>[
+                Radio(
+                  value: Handicap.yes,
+                  groupValue: _handicap,
+                  onChanged: (Handicap value) {
+                    setState(() {
+                      _handicap = value;
+                      handicap_val = true;
+                    });
+                  },
+                ),
+                Text(
+                  'Yes',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+                Container(
+                  padding: EdgeInsets.fromLTRB(20, 0, 0, 0),
+                  child: Radio(
+                    value: Handicap.no,
+                    groupValue: _handicap,
+                    onChanged: (Handicap value) {
+                      setState(() {
+                        _handicap = value;
+                        handicap_val = false;
+                      });
+                    },
+                  ),
+                ),
+                Text(
+                  'No',
+                  style: TextStyle(fontSize: 16, color: Colors.black),
+                ),
+              ],
+            )),
+      ],
+    );
+  }
 
   // **************************************** tab for login *****************************************
 
@@ -278,21 +487,21 @@ class LoginSignupState extends State<LoginSignup> {
                                 allGood = true;
                               }
                               if (allGood) {
-                                print("Login: Captured login info: ${lswidgets.e}, ${lswidgets.pwd}");
+                                print(
+                                    "Login: Captured login info: ${lswidgets.e}, ${lswidgets.pwd}");
 
                                 setState(() {
-                                  _futureUser =
-                                      HttpConnect().getUserProf(lswidgets.e, lswidgets.pwd);
+                                  _futureUser = HttpConnect()
+                                      .getUserProf(lswidgets.e, lswidgets.pwd);
                                 });
 
-                                _futureUser.then((value){
+                                _futureUser.then((value) {
                                   print("Login: Future object returned...");
                                   value.printUser();
                                   Navigator.pushNamed(
                                       context, StartPage.routeName,
                                       arguments: value);
                                 });
-
                               } else {
                                 return null;
                               }
@@ -352,7 +561,7 @@ class LoginSignupState extends State<LoginSignup> {
                             ),
                           )),
                       Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: lswidgets.email(),
                       ),
                       Container(
@@ -370,28 +579,40 @@ class LoginSignupState extends State<LoginSignup> {
                             ),
                           )),
                       Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: lswidgets.name(),
                       ),
                       Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: lswidgets.phone(),
                       ),
                       Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: _gender(),
                       ),
                       Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: _nationality(),
                       ),
                       Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 5),
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: _dob(),
                       ),
-                      Container(
-                        padding: EdgeInsets.fromLTRB(0, 0, 0, 40),
+                      /*Container(
+                        padding: EdgeInsets.fromLTRB(0, 0, 0, 20),
                         child: lswidgets.insurance(),
+                      ),*/
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: disease(),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        child: handicap(),
+                      ),
+                      Container(
+                        padding: EdgeInsets.fromLTRB(0, 5, 0, 20),
+                        child: insurance(),
                       ),
                       Container(
                         alignment: Alignment.center,
@@ -426,7 +647,11 @@ class LoginSignupState extends State<LoginSignup> {
                                     genderUser,
                                     lswidgets.p,
                                     nationalityValue,
-                                    lswidgets.i);
+                                    insurance_val,
+                                    handicap_val,
+                                    diabetes_val,
+                                    hypertension_val,
+                                    alcoholism_val);
                                 userInfoDb.printUser();
                                 setState(() {
                                   _futureUser =
@@ -512,4 +737,8 @@ class LoginSignupState extends State<LoginSignup> {
 }
 
 List<String> genders = ['Male', 'Female'].toList();
+List<bool> insurances = [true, false].toList();
+List<bool> handicaps = [true, false].toList();
 enum Genders { male, female }
+enum Insurance { yes, no }
+enum Handicap { yes, no }
