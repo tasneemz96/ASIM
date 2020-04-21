@@ -8,7 +8,7 @@ const config = {
         dbURL: 'mongodb://localhost:27017/mydb',
         patientsCollection: 'patients',
         appointmentsCollection: 'appointments',
-
+        doctorsCollection: 'doctors',
     }
 }
 

@@ -4,12 +4,12 @@ const test = {
 
     appointments: {
         appointment1: {
-            doctor: "Dr. Ben Cho",
-            specialization: "Gynaecology",
+            doctor: "Dr. Greyson Navarro",
+            specialization: "Nephrology",
             date: "23 April 2020",
-            starttime: "12:00",
-            endtime: "12:20",
-            patients: {1: "5e9b25069122db2720d37072",},
+            starttime: "14:30",
+            endtime: "14:50",
+            patients: {},
             available: "yes",
         },
 

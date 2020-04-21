@@ -160,7 +160,7 @@ function modifyPatient(value, newvalue){
                             resolve(resp);
                         }
                             // access mydb > patients, and update an existing record
-                        dbo.collection(patientsCollection).updateOne(value, newvalue, function(err, res) {
+                        dbo.collection(patientsCollection).updateOne(value, { $set: newvalue}, function(err, res) {
                             if (err) throw err;
                             else {
                                 console.log("1 patient updated");
@@ -375,7 +375,7 @@ function modifyAppointment(value, newvalue){
                             resolve(resp);
                         }
                             // access mydb > appointments, and update an existing record
-                        dbo.collection(appointmentsCollection).updateOne(value, newvalue, function(err, res) {
+                        dbo.collection(appointmentsCollection).updateOne(value, { $set:  newvalue}, function(err, res) {
                             if (err) throw err;
                             else {
                                 console.log("1 appointment updated");
@@ -504,11 +504,63 @@ function getAppointmentInfo(appointmentID){
 
 }
 
+function getAppointmentBySpecialization(specialist){
+    resp = {
+        status : "",
+        appointment : {}
+    };
+
+    return new Promise((resolve, reject) => {
+        try{
+            // connect to database 
+            MongoClient.connect(url, function(err, db){
+                if (err){
+                    throw err;
+                }
+                var dbo = db.db(dbName);
+                // connec to mydb > appointments
+                dbo.collection(appointmentsCollection).find({specialization : specialist, available: "yes" }).toArray (function (err, obj){
+                    if(err){
+                        throw err;
+                    }
+                    // if record does not exist with these credentials 
+                    if(obj == null){
+                        console.log("No specialists");
+                        db.close();
+                        // unsuccesful
+                        resp.status = 0;
+                        // return status
+                        resolve(resp);
+                    }
+                    else{
+                        console.log("found specialists");
+                        console.log(obj);
+                        // succesful
+                        resp.status = 1;
+                        resp.appointment = obj;
+                        db.close();
+                        // return status and record
+                        resolve(resp);
+                    }
+                });
+            });
+        }
+        catch{
+            console.log("woops");
+            // could not connect to db
+            resp.status = -1;
+            db.close();
+            // return status
+            resolve(resp);
+        }
+    });
+}
+
 /* ---------------------------------------------------------------------- */
 
 // connectDB();
 
-// var tasneem_mod = { $set: test_patients.tasneem_mod};
+// var tasneem_mod = text.patients.tasneem_mod
 // modifyPatient(tasneem, tasneem_mod);
 
 //insertPatient(tasneem);
@@ -518,8 +570,8 @@ function getAppointmentInfo(appointmentID){
 
 // getPatientInfo(tasneemLogin);
 
- // insertAppointment(appt2);
-var appt1_mod = {$set: test.appointments.appointment2_mod};
+//insertAppointment(appt1);
+// getAppointmentBySpecialization('Cardiology');
  // console.log(Object.keys(appt2.patients).length); // to find number of patients in an appointment 
  //connectDB();
 
@@ -534,6 +586,7 @@ module.exports.insertAppointment = insertAppointment;
 module.exports.modifyAppointment = modifyAppointment;
 module.exports.deleteAppointment = deleteAppointment;
 module.exports.getAppointmentInfo = getAppointmentInfo;
+module.exports.getAppointmentBySpecialization = getAppointmentBySpecialization;
 
 module.exports.connectDB = connectDB;
 module.exports.createPatientsColl = createPatientsColl;
