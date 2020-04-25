@@ -75,7 +75,16 @@ app.post('/app/availableappointments', urlencodedParser, async (req, res)=>{
         console.log("Retrieval error");
     }
     console.log(resp.appointment);
-    res.end(JSON.stringify(resp));
+    var appointmentJSON = {};
+    var appointmentArray = resp.appointment;
+    var numAppointments = appointmentArray.length;
+    var i;
+    appointmentJSON["numAppointments"] = numAppointments;
+    for(i=0; i<numAppointments;i++){
+        appointmentJSON[(i+1).toString()] = appointmentArray[i];
+    }
+    console.log(appointmentJSON);
+    res.end(JSON.stringify(appointmentJSON));
 })
 
 // custom 404 page
