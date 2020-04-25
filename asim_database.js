@@ -558,6 +558,58 @@ function getAppointmentBySpecialization(specialist){
 
 /* ---------------------------------------------------------------------- */
 
+function getAppointmentByDoctor(doctorName){
+    resp = {
+        status : "",
+        appointment : {}
+    };
+
+    return new Promise((resolve, reject) => {
+        try{
+            // connect to database 
+            MongoClient.connect(url, function(err, db){
+                if (err){
+                    throw err;
+                }
+                var dbo = db.db(dbName);
+                // connec to mydb > appointments
+                dbo.collection(appointmentsCollection).find({doctor : "Dr. " + doctorName}).toArray (function (err, obj){
+                    if(err){
+                        throw err;
+                    }
+                    // if record does not exist with these credentials 
+                    if(obj == null){
+                        console.log("No doctor by this name");
+                        db.close();
+                        // unsuccesful
+                        resp.status = 0;
+                        // return status
+                        resolve(resp);
+                    }
+                    else{
+                        console.log("found doctor");
+                        console.log(obj);
+                        // succesful
+                        resp.status = 1;
+                        resp.appointment = obj;
+                        db.close();
+                        // return status and record
+                        resolve(resp);
+                    }
+                });
+            });
+        }
+        catch{
+            console.log("woops");
+            // could not connect to db
+            resp.status = -1;
+            db.close();
+            // return status
+            resolve(resp);
+        }
+    });
+}
+
 // connectDB();
 
 // var tasneem_mod = text.patients.tasneem_mod
@@ -569,6 +621,8 @@ function getAppointmentBySpecialization(specialist){
 // deletePatient(omar);
 
 // getPatientInfo(tasneemLogin);
+
+getAppointmentByDoctor("Ben Cho");
 
 //insertAppointment(appt1);
 // getAppointmentBySpecialization('Cardiology');
@@ -587,6 +641,7 @@ module.exports.modifyAppointment = modifyAppointment;
 module.exports.deleteAppointment = deleteAppointment;
 module.exports.getAppointmentInfo = getAppointmentInfo;
 module.exports.getAppointmentBySpecialization = getAppointmentBySpecialization;
+module.exports.getAppointmentByDoctor = getAppointmentByDoctor;
 
 module.exports.connectDB = connectDB;
 module.exports.createPatientsColl = createPatientsColl;

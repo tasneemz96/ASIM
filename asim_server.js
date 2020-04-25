@@ -61,6 +61,23 @@ app.post('/app/login', urlencodedParser, async (req, res) => {
     res.end(JSON.stringify(patientProfInfo));
 });
 
+// use for retrieving all available appointments based on specialists
+app.post('/app/availableappointments', urlencodedParser, async (req, res)=>{
+    var status = "";
+    var specialization = req.body.specialization;
+    console.log("User clicked on: " + specialization);
+    var resp = await db.getAppointmentBySpecialization(specialization);
+    if(resp.status==1){
+        // successful retrieval from database
+        console.log("Retrieval success");
+    }
+    else{
+        console.log("Retrieval error");
+    }
+    console.log(resp.appointment);
+    res.end(JSON.stringify(resp));
+})
+
 // custom 404 page
 app.use(function (req, res) {
     res.type('text/plain');
