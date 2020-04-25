@@ -6,9 +6,7 @@ const test = {
         appointment1: {
             doctor: "Dr. Greyson Navarro",
             specialization: "Nephrology",
-            date: "23 April 2020",
-            starttime: "14:30",
-            endtime: "14:50",
+            date: "23-04-2020 14:30",
             patients: {},
             available: "yes",
         },
