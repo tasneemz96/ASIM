@@ -3,7 +3,8 @@
 const config = {
     port: 3000,
     database: {
-        url: 'mongodb://localhost:27017/',
+        uri: "mongodb+srv://Tasneem:tasneem@cluster0-0cknp.mongodb.net/test?retryWrites=true&w=majority",
+        url: 'mongodb://localhost:27017/', // for the local db
         dbName: 'mydb',
         dbURL: 'mongodb://localhost:27017/mydb',
         patientsCollection: 'patients',

@@ -1,7 +1,9 @@
 const config = require('./asim_config');
 const test = require('./test_db');
 
-const url = config.database.url;
+const uri = config.database.uri;
+
+// const url = config.database.url; // local db, dont need 
 const dbName = config.database.dbName;
 const db_url = config.database.dbURL;
 const patientsCollection = config.database.patientsCollection;
@@ -13,7 +15,7 @@ var MongoClient = require('mongodb').MongoClient;
 
 // connect to your database - test  
 function connectDB(){
-    MongoClient.connect(db_url, function(err, db) {
+    MongoClient.connect(uri, function(err, db) {
         if (err) 
             {
                 console.log("Error encountered");
@@ -30,7 +32,7 @@ function connectDB(){
 // create a patients collection in  database 
 function createPatientsColl(){
     // connect to database mydb
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect(uri, function(err, db) {
         if (err) throw err;
         var dbo = db.db(dbName);
         // in mydb, create a collection called 'patients'
@@ -44,7 +46,7 @@ function createPatientsColl(){
 
 function createAppointmentsColl(){
     // connect to database mydb
-    MongoClient.connect(url, function(err, db) {
+    MongoClient.connect(uri, function(err, db) {
         if (err) throw err;
         var dbo = db.db(dbName);
         // in mydb, create a collection called 'appointments'
@@ -85,7 +87,7 @@ function insertPatient(patient){
     return new Promise ((resolve, reject) =>{
         try{
             // connect to mydb
-            MongoClient.connect(url, function(err, db) {
+            MongoClient.connect(uri, function(err, db) {
                 if (err) throw err;
                 var dbo = db.db(dbName);
                 
@@ -147,7 +149,7 @@ function modifyPatient(value, newvalue){
     return new Promise((resolve, reject) =>{
         try{
             // connect to mydb
-            MongoClient.connect(url, function(err, db) {
+            MongoClient.connect(uri, function(err, db) {
                 if (err) throw err;
                 else {
                     var dbo = db.db(dbName);
@@ -198,7 +200,7 @@ function deletePatient(value){
     return new Promise((resolve, reject) => {
         try{
             // connect to mydb
-            MongoClient.connect(url, function(err, db) {
+            MongoClient.connect(uri, function(err, db) {
                 if (err) throw err;
                 var dbo = db.db(dbName);
                 dbo.collection(patientsCollection).findOne(value, function(err, obj){
@@ -246,7 +248,7 @@ function getPatientInfo(emailAndPass){
     return new Promise((resolve, reject) => {
         try{
             // connect to database 
-            MongoClient.connect(url, function(err, db){
+            MongoClient.connect(uri, function(err, db){
                 if (err){
                     throw err;
                 }
@@ -301,7 +303,7 @@ function insertAppointment(appointment){
     return new Promise ((resolve, reject) =>{
         try{
             // connect to mydb
-            MongoClient.connect(url, function(err, db) {
+            MongoClient.connect(uri, function(err, db) {
                 if (err) throw err;
                 var dbo = db.db(dbName);
                 
@@ -362,7 +364,7 @@ function modifyAppointment(value, newvalue){
     return new Promise((resolve, reject) =>{
         try{
             // connect to mydb
-            MongoClient.connect(url, function(err, db) {
+            MongoClient.connect(uri, function(err, db) {
                 if (err) throw err;
                 else {
                     var dbo = db.db(dbName);
@@ -413,7 +415,7 @@ function deleteAppointment(value){
     return new Promise((resolve, reject) => {
         try{
             // connect to mydb
-            MongoClient.connect(url, function(err, db) {
+            MongoClient.connect(uri, function(err, db) {
                 if (err) throw err;
                 var dbo = db.db(dbName);
                 dbo.collection(appointmentsCollection).findOne(value, function(err, obj){
@@ -460,7 +462,7 @@ function getAppointmentInfo(appointmentID){
     return new Promise((resolve, reject) => {
         try{
             // connect to database 
-            MongoClient.connect(url, function(err, db){
+            MongoClient.connect(uri, function(err, db){
                 if (err){
                     throw err;
                 }
@@ -513,7 +515,7 @@ function getAppointmentBySpecialization(specialist){
     return new Promise((resolve, reject) => {
         try{
             // connect to database 
-            MongoClient.connect(url, function(err, db){
+            MongoClient.connect(uri, function(err, db){
                 if (err){
                     throw err;
                 }
@@ -567,7 +569,7 @@ function getAppointmentByDoctor(doctorName){
     return new Promise((resolve, reject) => {
         try{
             // connect to database 
-            MongoClient.connect(url, function(err, db){
+            MongoClient.connect(uri, function(err, db){
                 if (err){
                     throw err;
                 }
@@ -610,24 +612,31 @@ function getAppointmentByDoctor(doctorName){
     });
 }
 
-// connectDB();
+//connectDB();
 
 // var tasneem_mod = text.patients.tasneem_mod
 // modifyPatient(tasneem, tasneem_mod);
 
-//insertPatient(tasneem);
-//insertPatient(mostafa);
-//insertPatient(omar);
+// insertPatient(test.patients.patient);
+
 // deletePatient(omar);
 
 // getPatientInfo(tasneemLogin);
 
-getAppointmentByDoctor("Ben Cho");
+// getAppointmentByDoctor("Ben Cho");
 
-//insertAppointment(appt1);
+insertAppointment(test.appointments.one);
+insertAppointment(test.appointments.two);
+insertAppointment(test.appointments.three);
+insertAppointment(test.appointments.four);
+insertAppointment(test.appointments.five);
+insertAppointment(test.appointments.six);
+insertAppointment(test.appointments.seven);
+insertAppointment(test.appointments.eight);
+
 // getAppointmentBySpecialization('Cardiology');
+
  // console.log(Object.keys(appt2.patients).length); // to find number of patients in an appointment 
- //connectDB();
 
 /* -------------------------------------------------------------------------- */
 
