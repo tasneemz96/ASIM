@@ -4,6 +4,14 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:google_fonts/google_fonts.dart';
 
 class asimColors{
+
+  TextStyle myTitleStyle() {
+    return GoogleFonts.abrilFatface(
+      fontSize: 23,
+      color: c64Purple(),
+    );
+  }
+
   Color c64Purple() {
     return Color(0xff706fd3);
   }

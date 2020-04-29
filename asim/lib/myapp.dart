@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'colors.dart';
 import 'loginsignup.dart';
 import 'startpage.dart';
+import 'AvailableAppointmentsPage.dart';
 
 asimColors col = asimColors();
 
@@ -14,6 +15,8 @@ class MyApp extends StatelessWidget {
     var routes = <String, WidgetBuilder>{
       StartPage.routeName: (BuildContext context) =>
       new StartPage(title: "StartPage"),
+      AvailableAppointmentsPage.routeName: (BuildContext context) =>
+      new AvailableAppointmentsPage(title: "AvailableAppointmentsPage"),
     };
 
     final String appTitle = "ASIM";

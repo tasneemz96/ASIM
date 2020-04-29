@@ -10,12 +10,11 @@ import 'package:google_fonts/google_fonts.dart';
 import 'generaluse.dart';
 import 'loginsignupWidgets.dart';
 import 'package:asim/colors.dart';
-import 'startpageWidgets.dart';
+
 import 'appointmentpage.dart';
 import 'bookingpage.dart';
 
 asimColors col = new asimColors();
-StartPageWidgets spwidgets = new StartPageWidgets();
 
 class StartPage extends StatefulWidget {
   StartPage({Key key, this.title}) : super(key: key);
@@ -24,8 +23,14 @@ class StartPage extends StatefulWidget {
 
   final String title;
 
+  static UserInfoDb userInfoDb;
+  static void setUser(UserInfoDb user){
+    userInfoDb = user;
+    // print("setting user in start page... ${userInfoDb.email}");
+  }
+
   @override
-  StartPageState createState() => new StartPageState();
+  StartPageState createState() => new StartPageState(userInfoDb);
 }
 
 
@@ -42,38 +47,49 @@ class StartPageState extends State<StartPage> {
     });
   }
 
+  UserInfoDb userInfoDb;
+  void setUser(UserInfoDb user){
+    this.userInfoDb = user;
+  }
+
+  StartPageState(UserInfoDb userInfoDb){
+    this.userInfoDb = userInfoDb;
+    this.setUser(userInfoDb);
+    // print("sending user thru constructor... ${userInfoDb.email}");
+  }
+
   @override
   Widget build(BuildContext context) {
-    UserInfoDb userInfoDb = ModalRoute.of(context).settings.arguments;
+    userInfoDb = ModalRoute.of(context).settings.arguments;
     print("Start Page: User info pushed into route...");
-    userInfoDb.printUser();
+    print("${userInfoDb}");
 
     AppointmentPage appPage = new AppointmentPage();
     appPage.setName(userInfoDb.name);
+    appPage.setUser(userInfoDb);
 
     ProfileDisplay profileDisplay = new ProfileDisplay();
     profileDisplay.setUser(userInfoDb);
 
     BookingPage bookingPage = new BookingPage();
+    bookingPage.setUser(userInfoDb);
 
     List<Widget> widgetOptions = <Widget>[
-      appPage.page(),
-      bookingPage.book(),
+      appPage.apps(),
+      bookingPage,
       profileDisplay.profile(),
     ];
 
     // appPage.setName(userInfoDb.name);
     userInfoDb.printUser();
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         elevation: 0.0,
         backgroundColor: Colors.white,
         title: Text(
           'ASIM',
-          style: GoogleFonts.abrilFatface(
-            fontSize: 23,
-            color: col.c64Purple(),
-          ),
+          style: col.myTitleStyle(),
         ),
       ),
       body: IndexedStack(
