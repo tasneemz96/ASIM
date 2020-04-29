@@ -80,7 +80,8 @@ var appt2 = test.appointments.appointment2;
 // add patient to mydb > patients
 function insertPatient(patient){
     var resp = {
-        status: ""
+        status: "",
+        patient: {}
     };
 
     // synchronize with database 
@@ -108,6 +109,7 @@ function insertPatient(patient){
                                   db.close();
                                   // resp.status = 1 means successful operation
                                   resp.status = 1;
+                                  resp.patient = patient;
                                   // return the resp JSON at end of function
                                   resolve(resp);
                                 }
@@ -121,6 +123,7 @@ function insertPatient(patient){
                             db.close();
                             // resp.status = -1 means unsuccessful operation
                             resp.status = -1;
+                            resp.patient = patient;
                             // return resp JSON at end of function
                             resolve(resp);
                         }
@@ -142,7 +145,8 @@ function insertPatient(patient){
 // update a patient's information in mydb > patients -- value is the record to be modified, newvalue is the record replacing it
 function modifyPatient(value, newvalue){
     resp = {
-        status : ""
+        status : "",
+        patient: {}
     }
 
     // synchronize with database 
@@ -612,7 +616,7 @@ function getAppointmentByDoctor(doctorName){
     });
 }
 
-//connectDB();
+// connectDB();
 
 // var tasneem_mod = text.patients.tasneem_mod
 // modifyPatient(tasneem, tasneem_mod);
@@ -625,15 +629,24 @@ function getAppointmentByDoctor(doctorName){
 
 // getAppointmentByDoctor("Ben Cho");
 
-insertAppointment(test.appointments.one);
-insertAppointment(test.appointments.two);
-insertAppointment(test.appointments.three);
-insertAppointment(test.appointments.four);
-insertAppointment(test.appointments.five);
-insertAppointment(test.appointments.six);
-insertAppointment(test.appointments.seven);
-insertAppointment(test.appointments.eight);
-
+// insertAppointment(test.appointments.one);
+// insertAppointment(test.appointments.two);
+// insertAppointment(test.appointments.three);
+// insertAppointment(test.appointments.four);
+// insertAppointment(test.appointments.five);
+// insertAppointment(test.appointments.six);
+// insertAppointment(test.appointments.seven);
+// insertAppointment(test.appointments.eight);
+/*
+modifyAppointment(test.appointments.one, test.appointments.one2);
+modifyAppointment(test.appointments.two, test.appointments.two2);
+modifyAppointment(test.appointments.three, test.appointments.three2);
+modifyAppointment(test.appointments.four, test.appointments.four2);
+modifyAppointment(test.appointments.five, test.appointments.five2);
+modifyAppointment(test.appointments.six, test.appointments.six2);
+modifyAppointment(test.appointments.seven, test.appointments.seven2);
+modifyAppointment(test.appointments.eight, test.appointments.eight2);
+*/
 // getAppointmentBySpecialization('Cardiology');
 
  // console.log(Object.keys(appt2.patients).length); // to find number of patients in an appointment 
