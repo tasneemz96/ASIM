@@ -1,4 +1,7 @@
 *test_db.js
+*.csv
+*.xlsx
+*asim_classifier.py
 *asim_config.js
 node_modules
 *~
